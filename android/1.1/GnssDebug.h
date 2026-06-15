@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2016 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Changes from Qualcomm Technologies, Inc. are provided under the following license:
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+*/
 
 #ifndef ANDROID_HARDWARE_GNSS_V1_1_GNSSDEBUG_H
 #define ANDROID_HARDWARE_GNSS_V1_1_GNSSDEBUG_H

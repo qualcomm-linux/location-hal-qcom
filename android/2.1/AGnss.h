@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2017-2021, The Linux Foundation. All rights reserved.
  * Not a Contribution
  */
@@ -17,6 +17,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Changes from Qualcomm Technologies, Inc. are provided under the following license:
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+*/
 
 #ifndef ANDROID_HARDWARE_GNSS_V2_0_AGNSS_H
 #define ANDROID_HARDWARE_GNSS_V2_0_AGNSS_H
