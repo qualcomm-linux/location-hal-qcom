@@ -2,8 +2,9 @@ name: QC Preflight Checks
 
 on:
   pull_request:
+    branches: [location.lnx.0.0]
   push:
-    branches: [main]
+    branches: [location.lnx.0.0]
   workflow_dispatch:
 
 jobs:
