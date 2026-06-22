@@ -3,9 +3,8 @@ ACLOCAL_AMFLAGS = -I m4
 AM_CFLAGS = -I./ \
             $(LOCPLA_CFLAGS) \
             $(GPSUTILS_CFLAGS) \
-            -I./data-items/ \
-            -I./data-items/common \
-            -I./observer \
+            -I$(top_srcdir)/data-items/ \
+            -I$(top_srcdir)/observer \
             -D__func__=__PRETTY_FUNCTION__ \
             -fno-short-enums \
             -std=c++11
