@@ -73,19 +73,18 @@ extern "C" {
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <properties.h>
 
 #define MAX_COMMAND_STR_LEN (255)
 #define BOOT_KPI_FILE "/sys/kernel/boot_kpi/kpi_values"
 
 // OpenWrt Musl C library supports strlcpy/strlcat
-#ifndef OFF_TARGET
-#define strlcat g_strlcat
-#define strlcpy g_strlcpy
-#elif defined(OFF_TARGET)
-#define strlcat strncat
-#define strlcpy strncpy
-#endif
+/*#ifndef OFF_TARGET*/
+/*#define strlcat g_strlcat*/
+/*#define strlcpy g_strlcpy*/
+/*#elif defined(OFF_TARGET)*/
+/*#define strlcat strncat*/
+/*#define strlcpy strncpy*/
+/*#endif*/
 
 #define LOC_PATH_GPS_CONF_STR      "/etc/gps.conf"
 #define LOC_PATH_IZAT_CONF_STR     "/etc/izat.conf"
@@ -104,13 +103,11 @@ extern char *program_invocation_short_name;
 
 #define PROPERTY_VALUE_MAX 92
 
-#ifdef OFF_TARGET
 inline int property_get(const char* key, char* value, const char* default_value)
 {
     strlcpy(value, default_value, PROPERTY_VALUE_MAX - 1);
     return strlen(value);
 }
-#endif /* OFF_TARGET */
 
 /*!
  * @brief Function for memory block copy
