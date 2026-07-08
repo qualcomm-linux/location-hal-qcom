@@ -4,8 +4,10 @@ AM_CFLAGS = -Wundef \
         -fno-inline \
         -fno-short-enums \
         -fpic \
-        ${GPSUTILS_CFLAGS} \
-        ${LOCCORE_CFLAGS} \
+        -I$(top_srcdir)/utils \
+        -I$(top_srcdir)/core \
+        -I$(top_srcdir)/location \
+        -I$(top_srcdir)/pla/oe \
         $(LOCPLA_CFLAGS) \
         -D__func__=__PRETTY_FUNCTION__ \
         -std=c++1y
@@ -15,8 +17,8 @@ AM_CPPFLAGS = $(AM_CFLAGS)
 ACLOCAL_AMFLAGS = -I m4
 
 requiredlibs = \
-        ${LOCCORE_LIBS} \
-        $(GPSUTILS_LIBS)
+        ../core/libloc_core.la \
+        ../utils/libgps_utils.la
 
 h_sources = \
         GeofenceAdapter.h
@@ -40,10 +42,6 @@ endif
 
 library_include_HEADERS = $(h_sources)
 
-library_includedir = $(pkgincludedir)
+library_includedir = $(includedir)
 
 lib_LTLIBRARIES = libgeofencing.la
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = location-geofence.pc
-EXTRA_DIST = $(pkgconfig_DATA)

@@ -1,10 +1,10 @@
 ACLOCAL_AMFLAGS = -I m4
 
 AM_CFLAGS = \
-     -I./ \
-     -I../utils \
+     -I$(srcdir) \
+     -I$(top_srcdir)/utils \
+     -I$(top_srcdir)/pla/oe \
      $(LOCPLA_CFLAGS) \
-     $(GPSUTILS_CFLAGS) \
      -std=c++11
 
 liblocation_api_la_SOURCES = \
@@ -25,7 +25,7 @@ liblocation_api_la_LDFLAGS = -Wl,-z,defs -lpthread -shared  -version-number @LT_
 liblocation_api_la_CPPFLAGS = $(AM_CFLAGS) $(AM_CPPFLAGS)
 endif
 
-liblocation_api_la_LIBADD = -lstdc++ -ldl $(GPSUTILS_LIBS)
+liblocation_api_la_LIBADD = -lstdc++ -ldl ../utils/libgps_utils.la
 
 library_include_HEADERS = \
     LocationAPI.h \
@@ -37,8 +37,4 @@ library_include_HEADERS = \
 #Create and Install libraries
 lib_LTLIBRARIES = liblocation_api.la
 
-library_includedir = $(pkgincludedir)
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = location-api.pc
-EXTRA_DIST = $(pkgconfig_DATA)
+library_includedir = $(includedir)
