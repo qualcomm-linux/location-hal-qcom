@@ -1,7 +1,9 @@
 AM_CFLAGS = \
-     $(GPSUTILS_CFLAGS) \
-     $(LOCCORE_CFLAGS) \
-     -I./ \
+     -I$(top_srcdir)/utils \
+     -I$(top_srcdir)/core \
+     -I$(top_srcdir)/location \
+     -I$(top_srcdir)/pla/oe \
+     -I$(srcdir) \
      -std=c++1y \
      -D__func__=__PRETTY_FUNCTION__ \
      -fno-short-enums
@@ -9,8 +11,8 @@ AM_CFLAGS = \
 ACLOCAL_AMFLAGS = -I m4
 
 requiredlibs = \
-        $(GPSUTILS_LIBS) \
-        $(LOCCORE_LIBS)
+        ../utils/libgps_utils.la \
+        ../core/libloc_core.la
 
 h_sources = \
     BatchingAdapter.h
@@ -31,12 +33,7 @@ endif
 
 library_include_HEADERS = $(h_sources)
 
-library_includedir = $(pkgincludedir)
+library_includedir = $(includedir)
 
 #Create and Install libraries
 lib_LTLIBRARIES = libbatching.la
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = location-batching.pc
-EXTRA_DIST = $(pkgconfig_DATA)
-

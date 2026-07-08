@@ -2,12 +2,14 @@ ACLOCAL_AMFLAGS = -I m4
 
 AM_CFLAGS = \
      $(LOCPLA_CFLAGS) \
-     $(LOCHAL_CFLAGS) \
-     $(GPSUTILS_CFLAGS) \
-     $(LOCCORE_CFLAGS) \
+     -I$(top_srcdir)/pla/oe \
      $(LIBXML_CFLAGS) \
-     -I./ \
-     -I../location \
+     -I$(top_srcdir)/utils \
+     -I$(top_srcdir)/core \
+     -I$(top_srcdir)/core/observer \
+     -I$(top_srcdir)/core/data-items \
+     -I$(srcdir) \
+     -I$(top_srcdir)/location \
      -std=c++14
 
 libgnss_la_SOURCES = \
@@ -36,7 +38,7 @@ libgnss_la_LDFLAGS = -Wl,-z,defs -lpthread -shared  -version-number @LT_VERSION_
 libgnss_la_CPPFLAGS = $(AM_CFLAGS) $(AM_CPPFLAGS)
 endif
 
-libgnss_la_LIBADD = -lstdc++ -ldl $(GPSUTILS_LIBS) $(LOCCORE_LIBS) $(LOCBASEUTIL_LIBS)
+libgnss_la_LIBADD = -lstdc++ -ldl ../utils/libgps_utils.la ../core/libloc_core.la ../location/liblocation_api.la ../utils/base_util/src/libloc_base_util.la
 
 #Create and Install libraries
 lib_LTLIBRARIES = libgnss.la

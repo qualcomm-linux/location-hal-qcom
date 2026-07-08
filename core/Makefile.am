@@ -1,10 +1,13 @@
 ACLOCAL_AMFLAGS = -I m4
 
-AM_CFLAGS = -I./ \
+AM_CFLAGS = -I$(srcdir) \
             $(LOCPLA_CFLAGS) \
-            $(GPSUTILS_CFLAGS) \
-            -I$(top_srcdir)/data-items/ \
-            -I$(top_srcdir)/observer \
+            -I$(top_srcdir)/pla/oe \
+            -I$(top_srcdir)/utils \
+            -I$(top_srcdir)/location \
+            -I$(srcdir)/data-items/ \
+            -I$(srcdir)/data-items/common \
+            -I$(srcdir)/observer \
             -D__func__=__PRETTY_FUNCTION__ \
             -fno-short-enums \
             -std=c++11
@@ -44,7 +47,7 @@ if USE_EXTERNAL_AP
 AM_CFLAGS += -DFEATURE_EXTERNAL_AP
 endif
 
-library_includedir = $(pkgincludedir)
+library_includedir = $(includedir)
 
 library_include_HEADERS = $(libloc_core_la_h_sources)
 
@@ -64,11 +67,7 @@ if USE_FEATURE_AUTOMOTIVE
 AM_CFLAGS += -DFEATURE_AUTOMOTIVE
 endif
 
-libloc_core_la_LIBADD = -ldl $(GPSUTILS_LIBS)
+libloc_core_la_LIBADD = -ldl ../utils/libgps_utils.la
 
 #Create and Install libraries
 lib_LTLIBRARIES = libloc_core.la
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = loc-core.pc
-EXTRA_DIST = $(pkgconfig_DATA)

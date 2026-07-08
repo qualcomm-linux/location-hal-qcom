@@ -105,7 +105,9 @@ extern char *program_invocation_short_name;
 
 inline int property_get(const char* key, char* value, const char* default_value)
 {
-    strlcpy(value, default_value, PROPERTY_VALUE_MAX - 1);
+
+	snprintf(value, PROPERTY_VALUE_MAX, "%s",
+				default_value ? default_value : "");
     return strlen(value);
 }
 

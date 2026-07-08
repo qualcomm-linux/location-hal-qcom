@@ -1,5 +1,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
+SUBDIRS = base_util
+
 AM_CFLAGS = -Wundef \
         -MD \
         -Wno-trigraphs \
@@ -7,11 +9,13 @@ AM_CFLAGS = -Wundef \
         -fno-inline \
         -fno-short-enums \
         -fpic \
-         -I./ \
+         -I$(srcdir) \
+         -I$(top_srcdir)/location \
+         -I$(top_srcdir)/pla/oe \
          -std=c++14 \
          $(LOCPLA_CFLAGS)
 
-libgps_utils_la_h_sources = \
+h_sources = \
         msg_q.h \
         linked_list.h \
         loc_cfg.h \
@@ -23,7 +27,7 @@ libgps_utils_la_h_sources = \
         LocThread.h \
         LocTimer.h \
         LocIpc.h \
-        SkipList.h\
+        SkipList.h \
         loc_misc_utils.h \
         loc_nmea.h \
         gps_extended_c.h \
@@ -31,8 +35,11 @@ libgps_utils_la_h_sources = \
         loc_gps.h \
         log_util.h \
         LocSharedLock.h \
-        LocUnorderedSetMap.h\
+        LocUnorderedSetMap.h \
         LocLoggerBase.h
+
+library_includedir = $(includedir)
+library_include_HEADERS = $(h_sources)
 
 libgps_utils_la_c_sources = \
         linked_list.c \
@@ -48,10 +55,6 @@ libgps_utils_la_c_sources = \
         MsgTask.cpp \
         loc_misc_utils.cpp \
         loc_nmea.cpp
-
-library_includedir = $(pkgincludedir)
-
-library_include_HEADERS = $(libgps_utils_la_h_sources)
 
 libgps_utils_la_SOURCES = $(libgps_utils_la_c_sources)
 
@@ -72,7 +75,3 @@ endif
 
 #Create and Install libraries
 lib_LTLIBRARIES = libgps_utils.la
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = qcom-gps-utils.pc
-EXTRA_DIST = $(pkgconfig_DATA)
