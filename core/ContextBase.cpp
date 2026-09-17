@@ -46,7 +46,7 @@
 namespace loc_core {
 
 #define SLL_LOC_API_LIB_NAME "libsynergy_loc_api.so"
-#define LOC_APIV2_0_LIB_NAME "libloc_api_v02.so"
+#define LOC_APIV2_0_LIB_NAME "libloc_api_v02.so.1"
 
 loc_gps_cfg_s_type ContextBase::mGps_conf {};
 loc_sap_cfg_s_type ContextBase::mSap_conf {};
