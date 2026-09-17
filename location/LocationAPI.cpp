@@ -56,6 +56,12 @@ typedef void (stopNetworkLocationGetter)(trackingCallback* callback);
 typedef ILocationAPI* (*getLocationClientApiImpl)(capabilitiesCallback capabitiescb);
 typedef ILocationControlAPI* (*getLocationIntegrationApiImpl) ();
 
+#define LOC_GNSS_LIB_NAME "libgnss.so.1"
+#define LOC_BATCHING_LIB_NAME "libbatching.so.1"
+#define LOC_GEOFENCING_LIB_NAME "libgeofencing.so.1"
+#define LOC_CLIENT_API_LIB_NAME "liblocation_client_api.so.1"
+#define LOC_INTEGRATION_API_LIB_NAME "liblocation_integration_api.so.1"
+
 typedef struct {
     // bit mask of the adpaters that we need to wait for the removeClientCompleteCallback
     // before we invoke the registered locationApiDestroyCompleteCallback
@@ -115,7 +121,7 @@ static void loadLibGnss() {
     if (NULL == gData.gnssInterface && !gGnssLoadFailed) {
         gData.gnssInterface =
             (GnssInterface*)loadLocationInterface<GnssInterface,
-                getGnssInterface>("libgnss.so", "getGnssInterface");
+                getGnssInterface>(LOC_GNSS_LIB_NAME, "getGnssInterface");
         if (NULL == gData.gnssInterface) {
             gGnssLoadFailed = true;
             LOC_LOGW("%s:%d]: No gnss interface available", __func__, __LINE__);
@@ -130,7 +136,7 @@ static void loadLibBatching() {
     if (NULL == gData.batchingInterface && !gBatchingLoadFailed) {
         gData.batchingInterface =
             (BatchingInterface*)loadLocationInterface<BatchingInterface,
-             getBatchingInterface>("libbatching.so", "getBatchingInterface");
+             getBatchingInterface>(LOC_BATCHING_LIB_NAME, "getBatchingInterface");
         if (NULL == gData.batchingInterface) {
             gBatchingLoadFailed = true;
             LOC_LOGW("%s:%d]: No batching interface available", __func__, __LINE__);
@@ -145,7 +151,7 @@ static void loadLibGeofencing() {
     if (NULL == gData.geofenceInterface && !gGeofenceLoadFailed) {
         gData.geofenceInterface =
            (GeofenceInterface*)loadLocationInterface<GeofenceInterface,
-           getGeofenceInterface>("libgeofencing.so", "getGeofenceInterface");
+           getGeofenceInterface>(LOC_GEOFENCING_LIB_NAME, "getGeofenceInterface");
         if (NULL == gData.geofenceInterface) {
             gGeofenceLoadFailed = true;
             LOC_LOGW("%s:%d]: No geofence interface available", __func__, __LINE__);
@@ -243,7 +249,7 @@ LocationAPI::createInstance (LocationCallbacks& locationCallbacks)
     if (isInfotainmentHalConfigured()) {
         void *handle = nullptr;
         getLocationClientApiImpl getter = (getLocationClientApiImpl)dlGetSymFromLib(handle,
-                "liblocation_client_api.so", "getLocationClientApiImpl");
+                LOC_CLIENT_API_LIB_NAME, "getLocationClientApiImpl");
         if (nullptr == getter) {
             LOC_LOGe("Failed to load LocationClientApi implementation.");
         } else {
@@ -746,7 +752,7 @@ LocationControlAPI::getInstance(LocationControlCallbacks& locationControlCallbac
         if (LocationAPI::isInfotainmentHalConfigured()) {
             getLocationIntegrationApiImpl getter =
                 (getLocationIntegrationApiImpl)dlGetSymFromLib(handle,
-                "liblocation_integration_api.so", "getLocationIntegrationApiImpl");
+                LOC_INTEGRATION_API_LIB_NAME, "getLocationIntegrationApiImpl");
             if (nullptr == getter) {
                 LOC_LOGe("Failed to load LocationIntegrationApi implementation.");
             } else {

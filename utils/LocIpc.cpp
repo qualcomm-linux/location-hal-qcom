@@ -54,6 +54,8 @@ namespace loc_util {
 #endif
 #define LOG_TAG "LocSvc_LocIpc"
 
+#define LOC_SOCKET_LIB_NAME "libloc_socket.so.1"
+
 #define SOCK_OP_AND_LOG(buf, length, opable, rtv, exe)  \
     if (nullptr == (buf) || 0 == (length)) { \
         LOC_LOGe("Invalid inputs: buf - %p, length - %u", (buf), (length)); \
@@ -448,7 +450,7 @@ unique_ptr<LocIpcRecver> LocIpc::getLocIpcLocalRecver(const shared_ptr<ILocIpcLi
     return make_unique<LocIpcLocalRecver>(listener, localSockName);
 }
 static void* sLibQrtrHandle = nullptr;
-static const char* sLibQrtrName = "libloc_socket.so";
+static const char* sLibQrtrName = LOC_SOCKET_LIB_NAME;
 shared_ptr<LocIpcSender> LocIpc::getLocIpcQrtrSender(int service, int instance) {
     typedef shared_ptr<LocIpcSender> (*creator_t) (int, int);
     static creator_t creator = (creator_t)dlGetSymFromLib(sLibQrtrHandle, sLibQrtrName,
