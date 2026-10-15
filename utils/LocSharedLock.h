@@ -38,7 +38,8 @@
 #include <stddef.h>
 #include <pthread.h>
 
-#if defined (FEATURE_EXTERNAL_AP) || defined (LOC_QCLINUX_TARGET)
+/* Android provides android_atomic_*(). Provide compatible helpers elsewhere. */
+#if defined(FEATURE_EXTERNAL_AP) || !defined(__ANDROID__)
 #include <atomic>
 
 inline int32_t android_atomic_inc(volatile int32_t *addr)
@@ -52,7 +53,7 @@ inline int32_t android_atomic_dec(volatile int32_t *addr)
     volatile std::atomic_int_least32_t* a = (volatile std::atomic_int_least32_t*)addr;
     return std::atomic_fetch_sub_explicit(a, 1, std::memory_order_release);
 }
-#endif /* LOC_QCLINUX_TARGET || LOC_QCLINUX_TARGET */
+#endif /* FEATURE_EXTERNAL_AP || !__ANDROID__ */
 
 namespace loc_util {
 
